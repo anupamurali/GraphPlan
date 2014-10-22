@@ -1,0 +1,142 @@
+<html>
+  <head>
+  <title>planGraphLevel.py</title>
+  </head>
+  <body>
+  <h3>planGraphLevel.py (<a href="../planGraphLevel.py">original</a>)</h3>
+  <hr>
+  <pre>
+<span style="color: darkred">"""
+Created on Oct 20, 2013
+
+@author: Ofra
+"""
+</span><span style="color: blue; font-weight: bold">from </span>action <span style="color: blue; font-weight: bold">import </span>Action
+<span style="color: blue; font-weight: bold">from </span>actionLayer <span style="color: blue; font-weight: bold">import </span>ActionLayer
+<span style="color: blue; font-weight: bold">from </span>util <span style="color: blue; font-weight: bold">import </span>Pair
+<span style="color: blue; font-weight: bold">from </span>proposition <span style="color: blue; font-weight: bold">import </span>Proposition
+<span style="color: blue; font-weight: bold">from </span>propositionLayer <span style="color: blue; font-weight: bold">import </span>PropositionLayer
+
+<span style="color: blue; font-weight: bold">class </span>PlanGraphLevel<span style="font-weight: bold">(</span>object<span style="font-weight: bold">):
+  </span><span style="color: darkred">"""
+  A class for representing a level in the plan graph.
+  For each level i, the PlanGraphLevel consists of the actionLayer and propositionLayer at this level in this order!
+  """
+  </span>independentActions <span style="font-weight: bold">= []  </span><span style="color: green; font-style: italic"># updated to the independentActions of the propblem GraphPlan.py line 31 
+  </span>actions <span style="font-weight: bold">= []             </span><span style="color: green; font-style: italic"># updated to the actions of the problem GraphPlan.py line 32 and planningProblem.py line 25
+  </span>props <span style="font-weight: bold">= []               </span><span style="color: green; font-style: italic"># updated to the propositions of the problem GraphPlan.py line 33 and planningProblem.py line 26
+  
+  </span>@staticmethod
+  <span style="color: blue; font-weight: bold">def </span>setIndependentActions<span style="font-weight: bold">(</span>independentActions<span style="font-weight: bold">):
+    </span>PlanGraphLevel<span style="font-weight: bold">.</span>independentActions <span style="font-weight: bold">= </span>independentActions
+  
+  @staticmethod  
+  <span style="color: blue; font-weight: bold">def </span>setActions<span style="font-weight: bold">(</span>actions<span style="font-weight: bold">):
+    </span>PlanGraphLevel<span style="font-weight: bold">.</span>actions <span style="font-weight: bold">= </span>actions
+  
+  @staticmethod    
+  <span style="color: blue; font-weight: bold">def </span>setProps<span style="font-weight: bold">(</span>props<span style="font-weight: bold">):
+    </span>PlanGraphLevel<span style="font-weight: bold">.</span>props <span style="font-weight: bold">= </span>props   
+  
+  <span style="color: blue; font-weight: bold">def </span>__init__<span style="font-weight: bold">(</span><span style="color: blue">self</span><span style="font-weight: bold">):
+    </span><span style="color: darkred">"""
+    Constructor
+    """
+    </span><span style="color: blue">self</span><span style="font-weight: bold">.</span>actionLayer <span style="font-weight: bold">= </span>ActionLayer<span style="font-weight: bold">()          </span><span style="color: green; font-style: italic"># see actionLayer.py
+    </span><span style="color: blue">self</span><span style="font-weight: bold">.</span>propositionLayer <span style="font-weight: bold">= </span>PropositionLayer<span style="font-weight: bold">()    </span><span style="color: green; font-style: italic"># see propositionLayer.py
+
+  
+  </span><span style="color: blue; font-weight: bold">def </span>getPropositionLayer<span style="font-weight: bold">(</span><span style="color: blue">self</span><span style="font-weight: bold">):
+    </span><span style="color: blue; font-weight: bold">return </span><span style="color: blue">self</span><span style="font-weight: bold">.</span>propositionLayer
+  
+  <span style="color: blue; font-weight: bold">def </span>setPropositionLayer<span style="font-weight: bold">(</span><span style="color: blue">self</span><span style="font-weight: bold">, </span>propLayer<span style="font-weight: bold">):
+    </span><span style="color: blue">self</span><span style="font-weight: bold">.</span>propositionLayer <span style="font-weight: bold">= </span>propLayer  
+  
+  <span style="color: blue; font-weight: bold">def </span>getActionLayer<span style="font-weight: bold">(</span><span style="color: blue">self</span><span style="font-weight: bold">):
+    </span><span style="color: blue; font-weight: bold">return </span><span style="color: blue">self</span><span style="font-weight: bold">.</span>actionLayer
+    
+  <span style="color: blue; font-weight: bold">def </span>setActionLayer<span style="font-weight: bold">(</span><span style="color: blue">self</span><span style="font-weight: bold">, </span>actionLayer<span style="font-weight: bold">):
+    </span><span style="color: blue">self</span><span style="font-weight: bold">.</span>actionLayer <span style="font-weight: bold">= </span>actionLayer
+
+  <span style="color: blue; font-weight: bold">def </span>updateActionLayer<span style="font-weight: bold">(</span><span style="color: blue">self</span><span style="font-weight: bold">, </span>previousPropositionLayer<span style="font-weight: bold">):
+    </span><span style="color: darkred">""" 
+    Updates the action layer given the previous proposition layer (see propositionLayer.py)
+    allAction is the list of all the action (include noOp in the domain)
+    """ 
+    </span>allActions <span style="font-weight: bold">= </span>PlanGraphLevel<span style="font-weight: bold">.</span>actions
+    <span style="color: red">"*** YOUR CODE HERE ***"
+   
+
+  </span><span style="color: blue; font-weight: bold">def </span>updateMutexActions<span style="font-weight: bold">(</span><span style="color: blue">self</span><span style="font-weight: bold">, </span>previousLayerMutexProposition<span style="font-weight: bold">):
+    </span><span style="color: darkred">"""
+    Updates the mutex list in self.actionLayer,
+    given the mutex proposition from the previous layer.
+    currentLayerActions are the actions in the current action layer
+    """
+    </span>currentLayerActions <span style="font-weight: bold">= </span><span style="color: blue">self</span><span style="font-weight: bold">.</span>actionLayer<span style="font-weight: bold">.</span>getActions<span style="font-weight: bold">()
+    </span><span style="color: red">"*** YOUR CODE HERE ***"
+   
+
+  </span><span style="color: blue; font-weight: bold">def </span>updatePropositionLayer<span style="font-weight: bold">(</span><span style="color: blue">self</span><span style="font-weight: bold">):
+    </span><span style="color: darkred">"""
+    Updates the propositions in the current proposition layer,
+    given the current action layer.
+    don't forget to update the producers list!
+    """
+    </span>currentLayerActions <span style="font-weight: bold">= </span><span style="color: blue">self</span><span style="font-weight: bold">.</span>actionLayer<span style="font-weight: bold">.</span>getActions<span style="font-weight: bold">()
+    </span><span style="color: red">"*** YOUR CODE HERE ***"
+
+
+  </span><span style="color: blue; font-weight: bold">def </span>updateMutexProposition<span style="font-weight: bold">(</span><span style="color: blue">self</span><span style="font-weight: bold">):
+    </span><span style="color: darkred">"""
+    updates the mutex propositions in the current proposition layer
+    """
+    </span>currentLayerPropositions <span style="font-weight: bold">= </span><span style="color: blue">self</span><span style="font-weight: bold">.</span>propositionLayer<span style="font-weight: bold">.</span>getPropositions<span style="font-weight: bold">()
+    </span>currentLayerMutexActions <span style="font-weight: bold">=  </span><span style="color: blue">self</span><span style="font-weight: bold">.</span>actionLayer<span style="font-weight: bold">.</span>getMutexActions<span style="font-weight: bold">()
+    </span><span style="color: red">"*** YOUR CODE HERE ***"   
+    
+
+  </span><span style="color: blue; font-weight: bold">def </span>expand<span style="font-weight: bold">(</span><span style="color: blue">self</span><span style="font-weight: bold">, </span>previousLayer<span style="font-weight: bold">):
+    </span><span style="color: darkred">"""
+    Your algorithm should work as follows:
+    First, given the propositions and the list of mutex propositions from the previous layer,
+    set the actions in the action layer. 
+    Then, set the mutex action in the action layer.
+    Finally, given all the actions in the current layer, set the propositions and their mutex relations in the proposition layer.   
+    """
+    </span>previousPropositionLayer <span style="font-weight: bold">= </span>previousLayer<span style="font-weight: bold">.</span>getPropositionLayer<span style="font-weight: bold">()
+    </span>previousLayerMutexProposition <span style="font-weight: bold">= </span>previousPropositionLayer<span style="font-weight: bold">.</span>getMutexProps<span style="font-weight: bold">()
+
+    </span><span style="color: red">"*** YOUR CODE HERE ***"   
+
+            
+  </span><span style="color: blue; font-weight: bold">def </span>expandWithoutMutex<span style="font-weight: bold">(</span><span style="color: blue">self</span><span style="font-weight: bold">, </span>previousLayer<span style="font-weight: bold">):
+    </span><span style="color: darkred">"""
+    Questions 11 and 12
+    You don't have to use this function
+    """
+    </span>previousLayerProposition <span style="font-weight: bold">= </span>previousLayer<span style="font-weight: bold">.</span>getPropositionLayer<span style="font-weight: bold">()
+    </span><span style="color: red">"*** YOUR CODE HERE ***"
+    
+        
+</span><span style="color: blue; font-weight: bold">def </span>mutexActions<span style="font-weight: bold">(</span>a1<span style="font-weight: bold">, </span>a2<span style="font-weight: bold">, </span>mutexProps<span style="font-weight: bold">):
+  </span><span style="color: darkred">"""
+  Complete code for deciding whether actions a1 and a2 are mutex,
+  given the mutex proposition from previous level (list of pairs of propositions).
+  Your updateMutexActions function should call this function
+  """
+  </span><span style="color: red">"*** YOUR CODE HERE ***"
+  
+        
+</span><span style="color: blue; font-weight: bold">def </span>mutexPropositions<span style="font-weight: bold">(</span>prop1<span style="font-weight: bold">, </span>prop2<span style="font-weight: bold">, </span>mutexActions<span style="font-weight: bold">):
+  </span><span style="color: darkred">"""
+  complete code for deciding whether two propositions are mutex,
+  given the mutex action from the current level (list of pairs of actions).
+  Your updateMutexProposition function should call this function
+  """
+  </span><span style="color: red">"*** YOUR CODE HERE ***"
+ </span>
+  </pre>
+  </body>
+  </html>
+  

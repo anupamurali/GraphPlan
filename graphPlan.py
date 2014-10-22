@@ -207,7 +207,30 @@ def independentPair(a1, a2):
   Returns true if the actions are neither have inconsistent effects
   nor they interfere one with the other
   """
-  "*** YOUR CODE HERE ***"
+  # Inconsistent effects
+  for p in a1.getAdd():
+    if (a2.isNegEffect(p)):
+      return False
+  for p in a2.getAdd():
+    if (a1.isNegEffect(p)):
+      return False
+  # Interference
+  for p in a1.getAdd():
+    pMutex = p.getMutexProps()
+    for pm in pMutex:
+      if pm in a2.getPre():
+        return False
+  for p in a1.getDelete():
+    if pm in a2.getPre():
+      return False
+  # Competing needs
+  for p in a1.getPre():
+    pMutex = p.getMutexProps()
+    for pm in pMutex:
+      if pm in a2.getPre():
+        return False
+
+  return True
   
     
 if __name__ == '__main__':  

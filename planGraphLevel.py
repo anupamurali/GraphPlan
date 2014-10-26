@@ -58,7 +58,7 @@ class PlanGraphLevel(object):
     allActions = PlanGraphLevel.actions
     for a in allActions:
       if previousPropositionLayer.allPrecondsInLayer(a):
-        self.actionLayer.actions.append(a)
+        self.actionLayer.addAction(a)
 
     #self.actionLayer.mutexActions = PlanGraphLevel.mutexActions
     #self.updateMutexActions(previousPropositionLayer.getMutexProps())
@@ -75,7 +75,7 @@ class PlanGraphLevel(object):
       for a_j in currentLayerActions:
         if a_i != a_j and mutexActions(a_i, a_j, previousLayerMutexProposition):
           if Pair(a_i,a_j) not in self.actionLayer.mutexActions:
-            self.actionLayer.mutexActions.append(Pair(a_i,a_j))
+            self.actionLayer.addMutexActions(a_i,a_j)
    
 
   def updatePropositionLayer(self):
@@ -139,6 +139,10 @@ def mutexActions(a1, a2, mutexProps):
   given the mutex proposition from previous level (list of pairs of propositions).
   Your updateMutexActions function should call this function
   """
+  # Check if a1 and a2 have inconsistent effects or interfere
+  if Pair(a1,a2) not in PlanGraphLevel.independentActions:
+    return True
+
   # Get preconditions of both actions
   pre1 = a1.getPre()
   pre2 = a2.getPre()
@@ -148,9 +152,7 @@ def mutexActions(a1, a2, mutexProps):
     for p2 in pre2:
       if Pair(p1, p2) in mutexProps:
         return True
-  # Check if a1 and a2 have inconsistent effects or interfere
-  if Pair(a1,a2) not in PlanGraphLevel.independentActions:
-    return True
+
   return False
 
   
@@ -165,7 +167,7 @@ def mutexPropositions(prop1, prop2, mutexActions):
   prod2 = prop2.getProducers()
   for a1 in prod1:
     for a2 in prod2:
-      if Pair(a1,a2) in mutexActions:
-        return True
-  return False
+      if Pair(a1,a2) not in mutexActions:
+        return False
+  return True
  

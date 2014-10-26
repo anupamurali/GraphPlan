@@ -207,19 +207,15 @@ def independentPair(a1, a2):
   Returns true if the actions are neither have inconsistent effects
   nor they interfere one with the other
   """
+  if a1 == a2:
+    return True
   # Inconsistent effects: Check if one adds a negative effect for another action
-  for p in a1.getAdd():
-    if (a2.isNegEffect(p)):
-      return False
-  for p in a2.getAdd():
-    if (a1.isNegEffect(p)):
-      return False
   # Interference: Check if one deletes a precondition of another
   for p in a1.getDelete():
-    if p in a2.getPre():
+    if a2.isPreCond(p) or a2.isPosEffect(p):
       return False
   for p in a2.getDelete():
-    if p in a1.getPre():
+    if a1.isPreCond(p) or a1.isPosEffect(p):
       return False
   return True
   

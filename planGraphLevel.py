@@ -53,7 +53,7 @@ class PlanGraphLevel(object):
   def updateActionLayer(self, previousPropositionLayer):
     """ 
     Updates the action layer given the previous proposition layer (see propositionLayer.py)
-    allAction is the list of all the action (include noOp in the domain)
+    allAction is the list of all the actions (include noOp in the domain)
     """ 
     allActions = PlanGraphLevel.actions
     "*** YOUR CODE HERE ***"
@@ -117,7 +117,21 @@ def mutexActions(a1, a2, mutexProps):
   given the mutex proposition from previous level (list of pairs of propositions).
   Your updateMutexActions function should call this function
   """
-  "*** YOUR CODE HERE ***"
+  # Get preconditions of both actions
+  pre1 = a1.getPre()
+  pre2 = a2.getPre()
+
+  # Competing needs: Check if a1 and a2 have preconditions that are mutex
+  for p1 in pre1:
+    for p2 in pre2:
+      if Pair(p1, p2) in mutexProps:
+        return True
+  # Check if a1 and a2 have inconsistent effects or interfere
+  ## TODO: CHECK IN INDEPENDENTACTIONS INSTEAD OF CALLING FUNCTION
+  if !GraphPlan.independentPair(a1, a2):
+    return True
+  return False
+
   
 		
 def mutexPropositions(prop1, prop2, mutexActions):
@@ -126,5 +140,11 @@ def mutexPropositions(prop1, prop2, mutexActions):
   given the mutex action from the current level (list of pairs of actions).
   Your updateMutexProposition function should call this function
   """
-  "*** YOUR CODE HERE ***"
+  prod1 = prop1.getProducers()
+  prod2 = prop2.getProducers()
+  for a1 in prod1:
+    for a2 in prod2:
+      if Pair(a1,a2) in mutexActions:
+        return True
+  return False
  

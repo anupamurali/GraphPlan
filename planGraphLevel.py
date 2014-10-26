@@ -59,9 +59,6 @@ class PlanGraphLevel(object):
     for a in allActions:
       if previousPropositionLayer.allPrecondsInLayer(a):
         self.actionLayer.addAction(a)
-
-    #self.actionLayer.mutexActions = PlanGraphLevel.mutexActions
-    #self.updateMutexActions(previousPropositionLayer.getMutexProps())
    
 
   def updateMutexActions(self, previousLayerMutexProposition):

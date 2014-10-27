@@ -32,8 +32,8 @@ class PlanningProblem():
     
     
   def isGoalState(self, state):
-    for s in self.goal:
-      if s not in state:
+    for p in self.goal:
+      if p not in state:
         return False
     return True
   
@@ -48,14 +48,13 @@ class PlanningProblem():
     Hint:  check out action.allPrecondsInList 
     """
     self._expanded += 1
-    #print self._expanded
     successors = []
     for a in self.actions:
-      # Check if all preconditions of a are in current state
+      # Check if all preconditions of action a are in current state
       if a.allPrecondsInList(state) and not a.isNoOp():  
-        # If a adds a proposition, add it to state  
+        # If action a adds a proposition, add it to state  
         successor = state + a.getAdd()  
-        # Get rid of propositions a deletes from state
+        # Get rid of propositions action a deletes from state
         for p in successor:
           if p in a.getDelete():
             # Remove from successor

@@ -90,12 +90,20 @@ class PlanningProblem():
       act = Action(name,precon,add,delete, True)
       self.actions.append(act)  
       
+      
 def maxLevel(state, problem):
   """
   The heuristic value is the number of layers required to expand all goal propositions.
   If the goal is not reachable from the state your heuristic should return float('inf')  
   """
-  "*** YOUR CODE HERE ***"
+  level = 0
+  Q = []
+  if problem.isGoalState(state):
+    return level
+  else:
+    successors = state.expandWithoutMutex
+    Q.appendsuccessors
+
  
 
 def levelSum(state, problem):

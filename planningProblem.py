@@ -59,7 +59,7 @@ class PlanningProblem():
           if p in a.getDelete():
             # Remove from successor
             successor.remove(p)
-        successors.append((successor, a, heuristic(self, state)))
+        successors.append((successor, a, heuristic(state, self)))
     return successors
 
 
@@ -90,25 +90,36 @@ class PlanningProblem():
       act = Action(name,precon,add,delete, True)
       self.actions.append(act)  
       
-      
+
 def maxLevel(state, problem):
   """
   The heuristic value is the number of layers required to expand all goal propositions.
   If the goal is not reachable from the state your heuristic should return float('inf')  
   """
   level = 0
-  Q = []
-  if problem.isGoalState(state):
-    return level
-  else:
-    successors = state.expandWithoutMutex
-    Q.appendsuccessors
+  firstPropLayer = PropositionLayer()
+  for p in state:
+    firstPropLayer.addProposition(p)
 
+  Graph = []
+  firstGraphLevel = PlanGraphLevel()
+  Graph.append(firstGraphLevel)
+  firstGraphLevel.setPropositionLayer(firstPropLayer)
+  Graph.append(copy.deepcopy(firstGraphLevel))
+  while((problem.goalStateNotInPropLayer(Graph[level].getPropositionLayer().getPropositions()))):
+    if isFixed(Graph, level):
+      return float('inf')
+    level += 1
+    nextGraph = PlanGraphLevel()
+    nextGraph.expandWithoutMutex(Graph[level-1])
+    Graph.append(copy.deepcopy(nextGraph))
+
+  return level
  
 
 def levelSum(state, problem):
   """
-  The heuristic value is the sum of sub-goals level they first appeared.
+  The heuristic value is the sum of sub-goal's level they first appeared.
   If the goal is not reachable from the state your heuristic should return float('inf')
   """
   "*** YOUR CODE HERE ***"

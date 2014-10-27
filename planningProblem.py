@@ -90,29 +90,33 @@ class PlanningProblem():
       act = Action(name,precon,add,delete, True)
       self.actions.append(act)  
       
-
 def maxLevel(state, problem):
   """
   The heuristic value is the number of layers required to expand all goal propositions.
   If the goal is not reachable from the state your heuristic should return float('inf')  
   """
   level = 0
-  firstPropLayer = PropositionLayer()
+  propLayerInit = PropositionLayer()
+  # Add all propositions in current state to proposition layer
   for p in state:
-    firstPropLayer.addProposition(p)
+    propLayerInit.addProposition(p)
 
+  pgInit = PlanGraphLevel()
+  pgInit.setPropositionLayer(propLayerInit)
   Graph = []
-  firstGraphLevel = PlanGraphLevel()
-  Graph.append(firstGraphLevel)
-  firstGraphLevel.setPropositionLayer(firstPropLayer)
-  Graph.append(copy.deepcopy(firstGraphLevel))
+  Graph.append(pgInit)
+  Graph.append(copy.deepcopy(pgInit))
+
+  # While goal state is not in proposition layer, keep expanding
   while((problem.goalStateNotInPropLayer(Graph[level].getPropositionLayer().getPropositions()))):
+    # If the graph has not changed between expansions, we should halt
     if isFixed(Graph, level):
       return float('inf')
     level += 1
-    nextGraph = PlanGraphLevel()
-    nextGraph.expandWithoutMutex(Graph[level-1])
-    Graph.append(copy.deepcopy(nextGraph))
+    pgNext = PlanGraphLevel()
+    # Expand without mutex (relaxed version of problem)
+    pgNext.expandWithoutMutex(Graph[level-1])
+    Graph.append(copy.deepcopy(pgNext))
 
   return level
  
@@ -163,6 +167,7 @@ if __name__ == '__main__':
   prob = PlanningProblem(domain, problem)
   start = time.clock()
   plan = aStarSearch(prob, heuristic)  
+
   elapsed = time.clock() - start
   if plan is not None:
     print "Plan found with %d actions in %.2f seconds" % (len(plan), elapsed)

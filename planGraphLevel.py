@@ -164,6 +164,7 @@ def mutexPropositions(prop1, prop2, mutexActions):
   prod2 = prop2.getProducers()
   for a1 in prod1:
     for a2 in prod2:
+      # Check if all actions are pairwise mutex
       if Pair(a1,a2) not in mutexActions:
         return False
   return True

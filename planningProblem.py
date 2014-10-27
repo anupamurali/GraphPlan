@@ -28,11 +28,14 @@ class PlanningProblem():
    
     
   def getStartState(self):
-    "*** YOUR CODE HERE ***"   
+    return self.initialState   
     
     
   def isGoalState(self, state):
-    "*** YOUR CODE HERE ***"
+    for s in self.goal:
+      if s not in state:
+        return False
+    return True
   
 
   def getSuccessors(self, state):
@@ -45,7 +48,21 @@ class PlanningProblem():
     Hint:  check out action.allPrecondsInList 
     """
     self._expanded += 1
-    "*** YOUR CODE HERE ***"       
+    #print self._expanded
+    successors = []
+    for a in self.actions:
+      # Check if all preconditions of a are in current state
+      if a.allPrecondsInList(state) and not a.isNoOp():  
+        # If a adds a proposition, add it to state  
+        successor = state + a.getAdd()  
+        # Get rid of propositions a deletes from state
+        for p in successor:
+          if p in a.getDelete():
+            # Remove from successor
+            successor.remove(p)
+        successors.append((successor, a, heuristic(self, state)))
+    return successors
+
 
   def getCostOfActions(self, actions):
     return len(actions)

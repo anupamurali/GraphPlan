@@ -2,6 +2,8 @@
 Created on Oct 20, 2013
 
 @author: Ofra
+
+Problem Set by Anupa Murali and Elliot Silva
 """
 from action import Action
 from actionLayer import ActionLayer

@@ -53,12 +53,10 @@ class PlanningProblem():
       # Check if all preconditions of action a are in current state
       if not a.isNoOp() and a.allPrecondsInList(state):  
         # If action a adds a proposition, add it to state  
-        successor = state + a.getAdd()  
+        successor = state + [p for p in a.getAdd() if p not in state]
         # Get rid of propositions action a deletes from state
-        for p in successor:
-          if p in a.getDelete():
-            # Remove from successor
-            successor.remove(p)
+        successor = [p for p in successor if p not in a.getDelete()]
+   
         # Stepcost is 1
         successors.append((successor, a, 1))
     return successors
@@ -105,19 +103,19 @@ def maxLevel(state, problem):
   pgInit = PlanGraphLevel()
   pgInit.setPropositionLayer(propLayerInit)
   # Graph is a list of PlanGraphLevel objects
-  Graph = []
-  Graph.append(pgInit)
+  graph = []
+  graph.append(pgInit)
 
   # While goal state is not in proposition layer, keep expanding
-  while problem.goalStateNotInPropLayer(Graph[level].getPropositionLayer().getPropositions()):
+  while problem.goalStateNotInPropLayer(graph[level].getPropositionLayer().getPropositions()):
     # If the graph has not changed between expansions, we should halt
-    if isFixed(Graph, level):
+    if isFixed(graph, level):
       return float('inf')
     level += 1
     pgNext = PlanGraphLevel()
     # Expand without mutex (relaxed version of problem)
-    pgNext.expandWithoutMutex(Graph[level-1])
-    Graph.append(pgNext)
+    pgNext.expandWithoutMutex(graph[level-1])
+    graph.append(pgNext)
 
   return level
  

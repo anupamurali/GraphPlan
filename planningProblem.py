@@ -105,7 +105,6 @@ def maxLevel(state, problem):
   pgInit.setPropositionLayer(propLayerInit)
   Graph = []
   Graph.append(pgInit)
-  Graph.append(copy.deepcopy(pgInit))
 
   # While goal state is not in proposition layer, keep expanding
   while((problem.goalStateNotInPropLayer(Graph[level].getPropositionLayer().getPropositions()))):
@@ -116,7 +115,7 @@ def maxLevel(state, problem):
     pgNext = PlanGraphLevel()
     # Expand without mutex (relaxed version of problem)
     pgNext.expandWithoutMutex(Graph[level-1])
-    Graph.append(copy.deepcopy(pgNext))
+    Graph.append(pgNext)
 
   return level
  

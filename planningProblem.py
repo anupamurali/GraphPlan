@@ -51,7 +51,7 @@ class PlanningProblem():
     successors = []
     for a in self.actions:
       # Check if all preconditions of action a are in current state
-      if a.allPrecondsInList(state) and not a.isNoOp():  
+      if not a.isNoOp() and a.allPrecondsInList(state):  
         # If action a adds a proposition, add it to state  
         successor = state + a.getAdd()  
         # Get rid of propositions action a deletes from state
@@ -59,7 +59,8 @@ class PlanningProblem():
           if p in a.getDelete():
             # Remove from successor
             successor.remove(p)
-        successors.append((successor, a, heuristic(state, self)))
+        # Stepcost is 1
+        successors.append((successor, a, 1))
     return successors
 
 
@@ -103,11 +104,12 @@ def maxLevel(state, problem):
 
   pgInit = PlanGraphLevel()
   pgInit.setPropositionLayer(propLayerInit)
+  # Graph is a list of PlanGraphLevel objects
   Graph = []
   Graph.append(pgInit)
 
   # While goal state is not in proposition layer, keep expanding
-  while((problem.goalStateNotInPropLayer(Graph[level].getPropositionLayer().getPropositions()))):
+  while problem.goalStateNotInPropLayer(Graph[level].getPropositionLayer().getPropositions()):
     # If the graph has not changed between expansions, we should halt
     if isFixed(Graph, level):
       return float('inf')
